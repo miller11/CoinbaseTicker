@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  CoinbaseTicker
+
+  Simple app that fires off of a queue event to track a personal coinbase wallet
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 60
+#    MemorySize: 256
+
+Resources:
+  CoinbaseTickerFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: coinbase_ticker
+      Handler: app.lambda_handler
+      Runtime: python3.7
+      Events:
+        JiraBot:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt CoinbaseTickerQueue.Arn
+            BatchSize: 1
+
+  # sqs queues that the lambda uses
+  CoinbaseTickerQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      VisibilityTimeout: 60
+
