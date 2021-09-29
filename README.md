@@ -2,6 +2,10 @@
 
 This is a basic lambda function that for right now simply tracks Coinbase metrics and stores them in AWS Timestream
 
+## Dependencies 
+- Setting up a coinbase api key and secret and storing them as SSM params
+- Adding permissions for the IAM role for this lambda function read the SSM params and to push data to Timestream
+
 
 ## Deploy the sample application
 
