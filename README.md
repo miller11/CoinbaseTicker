@@ -36,14 +36,14 @@ Build your application with the `sam build --use-container` command.
 CoinbaseTicker$ sam build --use-container
 ```
 
-The SAM CLI installs dependencies defined in `hello_world/requirements.txt`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
+The SAM CLI installs dependencies defined in `coinbase_ticker/requirements.txt`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
 
 Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
 
 Run functions locally and invoke them with the `sam local invoke` command.
 
 ```bash
-CoinbaseTicker$ sam local invoke HelloWorldFunction --event events/event.json
+CoinbaseTicker$ sam local invoke CoinbaseTickerFunction --event events/event.json
 ```
 
 
