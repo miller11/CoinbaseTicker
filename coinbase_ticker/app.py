@@ -43,6 +43,7 @@ def write_timestream(t_session, t_records):
         print("ERROR RejectedRecords: ", err)
         for rr in err.response["RejectedRecords"]:
             print("Rejected Index " + str(rr["RecordIndex"]) + ": " + rr["Reason"])
+            print("Rejected Record: " + t_records[rr["RecordIndex"]])
         print("Other records were written successfully. ")
         raise Exception(err)
     except Exception as err:
