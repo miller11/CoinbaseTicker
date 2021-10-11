@@ -43,7 +43,7 @@ def write_timestream(t_session, t_records):
         print("ERROR RejectedRecords: ", err)
         for rr in err.response["RejectedRecords"]:
             print("Rejected Index " + str(rr["RecordIndex"]) + ": " + rr["Reason"])
-            print("Rejected Record: " + t_records[rr["RecordIndex"]])
+            print("Rejected Record: " + str(t_records[rr["RecordIndex"]]))
         print("Other records were written successfully. ")
         raise Exception(err)
     except Exception as err:
@@ -95,7 +95,15 @@ def lambda_handler(event, context):
     records.append(build_record(account_dimensions, 'investment', summary_util.get_current_investment().amount))
     metrics.append(build_metric(account_dimensions, 'investment', summary_util.get_current_investment().amount))
 
+    # write data to timestream
+    write_timestream(session, records)
+
+    # write metrics to CloudWatch
+    write_metrics(session, metrics)
+
     for account_summary in summary_util.get_acct_summaries():
+        records = []
+        metrics = []
         dimensions = [
             {'Name': 'wallet', 'Value': 'ross'},
             {'Name': 'type', 'Value': account_summary['name']}

@@ -43,7 +43,7 @@ Test a single function by invoking it directly with a test event. An event is a 
 Run functions locally and invoke them with the `sam local invoke` command.
 
 ```bash
-CoinbaseTicker$ sam local invoke CoinbaseTickerFunction --event events/event.json
+sam local invoke CoinbaseTickerFunction --event events/event.json --profile coinbase
 ```
 
 
@@ -65,7 +65,7 @@ CoinbaseTicker$ python -m pytest tests/ -v
 To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
 
 ```bash
-aws cloudformation delete-stack --stack-name coinbase-ticker
+aws cloudformation delete-stack --stack-name coinbase-ticker --profile coinbase
 ```
 
 ## Resources
