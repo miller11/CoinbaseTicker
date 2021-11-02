@@ -4,16 +4,13 @@ from money import Money
 
 
 class AccountSummaryUtil:
-    def __init__(self, api_key, api_secret):
-        self.accounts = []
+    def __init__(self, accounts, api_key, api_secret):
+        self.accounts = accounts
         self.account_summaries = []
         self.init_summaries(api_key, api_secret)
 
     def get_acct_summaries(self):
         return self.account_summaries
-
-    def get_raw_accounts(self):
-        return self.accounts
 
     def get_total_gains(self):
         return sum([i['realized_gains'] for i in self.account_summaries])
@@ -26,10 +23,10 @@ class AccountSummaryUtil:
 
     def init_summaries(self, api_key, api_secret):
         client = Client(api_key, api_secret)
-        self.accounts = client.get_accounts(limit=50).data
 
-        for account in self.accounts:
+        for user_account in self.accounts:
             all_transactions = []
+            account = client.get_account(user_account['account_id'])
 
             if account.created_at is not None:
                 transactions = account.get_transactions()

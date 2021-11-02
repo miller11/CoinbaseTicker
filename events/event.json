@@ -1,9 +1,9 @@
 {
   "Records": [
     {
-      "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb78",
+      "messageId": "f476634d-d6eb-52aa-a338-70d1d4de65e0",
       "receiptHandle": "MessageReceiptHandle",
-      "body": "Hello from SQS!",
+      "body": "{\n  \"user_name\": \"70f772da-6555-41c9-818f-8d5b7b21b5eb\"}",
       "attributes": {
         "ApproximateReceiveCount": "1",
         "SentTimestamp": "1523232000000",
