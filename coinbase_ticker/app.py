@@ -8,8 +8,8 @@ import boto3
 import time
 import json
 
-TABLE_NAME = 'ross-gains'
-DATABASE_NAME = 'realized-gains'
+TABLE_NAME = 'account'
+DATABASE_NAME = 'account-tracker'
 CLOUDWATCH_NAMESPACE = 'coinbase-tracking'
 CURRENT_MILLI_TIME = round(time.time() * 1000)
 
@@ -99,7 +99,6 @@ def lambda_handler(event, context):
         key_param = f"/ic-miller/trade-tracker/{user_name}/coinbase/api-key"
         secret_param = f"/ic-miller/trade-tracker/{user_name}/coinbase/api-secret"
 
-
         api_key = ssm.get_parameter(Name=key_param, WithDecryption=True)['Parameter']['Value']
         api_secret = ssm.get_parameter(Name=secret_param, WithDecryption=True)['Parameter']['Value']
 
@@ -133,7 +132,7 @@ def lambda_handler(event, context):
         write_timestream(session, records)
 
         # write metrics to CloudWatch
-        write_metrics(session, metrics)
+        # write_metrics(session, metrics)
 
         for account_summary in summary_util.get_acct_summaries():
             records = []
@@ -159,4 +158,4 @@ def lambda_handler(event, context):
             write_timestream(session, records)
 
             # write metrics to CloudWatch
-            write_metrics(session, metrics)
+            # write_metrics(session, metrics)

@@ -18,6 +18,10 @@ Resources:
       CodeUri: coinbase_ticker
       Handler: app.lambda_handler
       Runtime: python3.7
+      Policies:
+        - AWSLambdaExecute
+        - DynamoDBCrudPolicy:
+            TableName: 'cb_user_accounts'
       Events:
         JiraBot:
           Type: SQS
