@@ -88,10 +88,15 @@ def write_metrics(m_session, m_records):
 
 
 def lambda_handler(event, context):
-    print(event)
+    print(json.dumps(event))
+
+    user_name = None
 
     for record in event['Records']:
-        user_name = json.loads(record['body'])['user_name']
+        if user_name is None or user_name == json.loads(record['body'])['user_name']:
+            user_name = json.loads(record['body'])['user_name']
+        else:
+            break  # prevent duplicate record processing
 
         # pull ssm param for jira account
         ssm = boto3.client('ssm', region_name='us-east-1')
